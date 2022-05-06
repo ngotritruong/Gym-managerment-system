@@ -1,5 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
+/*                                         
+ * To change this license header, choose License Headers in Project Properties.                                        
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -26,7 +26,7 @@ public class ListMember extends javax.swing.JFrame {
      */
     public ListMember() {
         initComponents();
-        
+        jTable1.setEnabled(false);
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel(); 
         try { 
             Connection con = Connect_data.mysql_Connection(); 

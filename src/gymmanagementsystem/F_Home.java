@@ -150,13 +150,17 @@ public class F_Home extends javax.swing.JFrame {
     private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked
         up.setVisible(true); 
     }//GEN-LAST:event_jMenu2MouseClicked
-    ListMember LM = new ListMember();
+    public Boolean bl = true;
     private void jMenu3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu3MouseClicked
-        LM.setVisible(true);
-        
+        ListMember LM = new ListMember();
+       
+            LM.setVisible(true);
+         
+         
     }//GEN-LAST:event_jMenu3MouseClicked
-    F_Payment pm = new F_Payment();
+
     private void jMenu6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu6MouseClicked
+        F_Payment pm = new F_Payment();
         pm.setVisible(true);
         
     }//GEN-LAST:event_jMenu6MouseClicked

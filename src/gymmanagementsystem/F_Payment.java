@@ -26,6 +26,7 @@ public class F_Payment extends javax.swing.JFrame {
     public F_Payment() {
         initComponents();
         // Tất cả khách hang
+        Tatcahoadon.setEnabled(false);
         DefaultTableModel model = (DefaultTableModel) Tatcahoadon.getModel(); 
         try { 
             Connection con = Connect_data.mysql_Connection(); 
@@ -43,6 +44,7 @@ public class F_Payment extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,ex);
         } 
         // Chua thanh toán
+        Chuatanhtoan.setEnabled(false);
         DefaultTableModel mode = (DefaultTableModel) Chuatanhtoan.getModel(); 
         try { 
             Connection con = Connect_data.mysql_Connection(); 

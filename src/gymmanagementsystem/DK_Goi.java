@@ -35,7 +35,7 @@ public class DK_Goi extends javax.swing.JFrame {
         GiaGoi.setEditable(false);
         NgDK.setEditable(false);
         NHH.setEditable(false);
-        this.showSelected();    
+//        this.showSelected();    
         this.date();
         try { 
             Connection con = Connect_data.mysql_Connection(); 
@@ -199,7 +199,7 @@ public class DK_Goi extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34))
+                .addGap(24, 24, 24))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(101, 101, 101)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -285,9 +285,7 @@ public class DK_Goi extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 10, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 614, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 624, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -359,64 +357,81 @@ public class DK_Goi extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void CB_magoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CB_magoiActionPerformed
-//        int checkMaG = 0;
-//        String magoi = (String)CB_magoi.getSelectedItem();
-//        try { 
-//            Connection con = Connect_data.mysql_Connection(); 
-//            Statement stmt = con.createStatement();
-//            ResultSet res=stmt.executeQuery("select * from goitap where MaG="+magoi);
-//            while(res.next()) {
-//                checkMaG = 1;
-//                CB_tengoi.setSelectedItem(new String(res.getString(2)));
-//                GiaGoi.setText(res.getString(3));
-//            }
-//               if(checkMaG == 0){
-//                JOptionPane.showMessageDialog(null,"Mã Goi không tồn tại");
-//            }
-//        } catch (Exception ex) {
-//            JOptionPane.showMessageDialog(null,ex);
-//        } 
-        
+        int checkMaG = 0;
+        String magoi = (String)CB_magoi.getSelectedItem();
+        try { 
+            Connection con = Connect_data.mysql_Connection(); 
+            Statement stmt = con.createStatement();
+            ResultSet res=stmt.executeQuery("select * from goitap where MaG= '"+magoi+"'");
+            while(res.next()) {
+                checkMaG = 1;
+                CB_tengoi.setSelectedItem(new String(res.getString(2)));
+                GiaGoi.setText(res.getString(3));
+            }
+               if(checkMaG == 0){
+                JOptionPane.showMessageDialog(null,"Mã Goi không tồn tại");
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null,ex);
+        } 
+        this.showSelected();
     }//GEN-LAST:event_CB_magoiActionPerformed
 
     private void CB_tengoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CB_tengoiActionPerformed
-        // TODO add your handling code here:
-        this.showSelected();
+        int checkMaG = 0;
+        String tengt = (String)CB_tengoi.getSelectedItem();
+        try { 
+            Connection con = Connect_data.mysql_Connection(); 
+            Statement stmt = con.createStatement();
+            ResultSet res=stmt.executeQuery("select * from goitap where TenGoi= '"+tengt+"'");
+            while(res.next()) {
+                checkMaG = 1;
+                CB_magoi.setSelectedItem(new String(res.getString(1)));
+                GiaGoi.setText(res.getString(3));
+            }
+               if(checkMaG == 0){
+                JOptionPane.showMessageDialog(null,"Mã Goi không tồn tại");
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null,ex);
+        } 
+            this.showSelected();
     }//GEN-LAST:event_CB_tengoiActionPerformed
 
     private void NHHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NHHActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_NHHActionPerformed
     
-    private int showSelected() {
+    private String showSelected() {
         // Choisir les frais d'inscription 
         Calendar cal = Calendar.getInstance();
         Date date = cal.getTime();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         cal.setTime(date);       
-        int amount=0;
         String newngay ="";
         int selectedItem = CB_tengoi.getSelectedIndex();
+        
         switch (selectedItem) {
             case 0:
-                amount = 250000;
                 cal.roll(Calendar.MONTH, 1);
                 break;
             case 1:
-                amount = 650000; 
+                cal.roll(Calendar.MONTH, 2);
+                break;
+            case 2:
                 cal.roll(Calendar.MONTH, 3);
                 break;
+            case 3:
+                cal.roll(Calendar.MONTH, 6);
+                break;
             default:
-                amount = 1800000;
                 cal.roll(Calendar.YEAR, 1);
                 break;
         }
-        
-        GiaGoi.setText(String.valueOf(amount)); 
         newngay = sdf.format(cal.getTime());
         NHH.setText(newngay);
-        TongTien.setText(String.valueOf(amount));
-        return amount;
+        TongTien.setText(GiaGoi.getText());
+        return newngay;
     }
     /**
      * @param args the command line arguments

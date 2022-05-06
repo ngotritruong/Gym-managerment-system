@@ -14,6 +14,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 /**
@@ -27,7 +29,7 @@ public class F_Update_Delete extends javax.swing.JFrame {
      */
     public F_Update_Delete() {
         initComponents();
-//        this.showSelected();
+        exitlb.setVisible(false);
     }
 
     /**
@@ -64,6 +66,7 @@ public class F_Update_Delete extends javax.swing.JFrame {
         TF_DiaChi = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         NTGia = new javax.swing.JLabel();
+        exitlb = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(120, 100));
@@ -180,11 +183,16 @@ public class F_Update_Delete extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 102, 204));
-        jLabel9.setText("Ngày tham gia");
+        jLabel9.setText("Ngày tham gia:");
 
         NTGia.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         NTGia.setForeground(new java.awt.Color(0, 102, 204));
         NTGia.setText("dd/mm/yy");
+
+        exitlb.setBackground(new java.awt.Color(255, 51, 51));
+        exitlb.setForeground(new java.awt.Color(255, 51, 51));
+        exitlb.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/close (1).png"))); // NOI18N
+        exitlb.setText("Thông tin thành viên nhập vào thiếu hoặc không đúng ");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -206,9 +214,9 @@ public class F_Update_Delete extends javax.swing.JFrame {
                     .addComponent(TF_DiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(28, 28, 28)
-                        .addComponent(TF_MaKH, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(TF_MaKH, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton5))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel9)
@@ -233,6 +241,10 @@ public class F_Update_Delete extends javax.swing.JFrame {
                 .addGap(70, 70, 70)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(392, 392, 392))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(499, 499, 499)
+                .addComponent(exitlb)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -281,7 +293,9 @@ public class F_Update_Delete extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(CB_TIME, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(TF_SDT, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(54, 54, 54)
+                .addGap(20, 20, 20)
+                .addComponent(exitlb)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton3)
@@ -349,7 +363,9 @@ public class F_Update_Delete extends javax.swing.JFrame {
             }catch (HeadlessException | SQLException e) {
                 JOptionPane.showMessageDialog(null, e); 
             }
-        } 
+        }else{
+            exitlb.setVisible(true);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -364,7 +380,7 @@ public class F_Update_Delete extends javax.swing.JFrame {
             // TODO add your handling code here:
             Connection con = Connect_data.mysql_Connection(); 
             Statement stmt = con.createStatement();
-            ResultSet res=stmt.executeQuery("select * from new_member WHERE MaKH="+search_MaKH);
+            ResultSet res=stmt.executeQuery("select * from new_member WHERE MaKH='"+search_MaKH+"'");
             
             while(res.next()) {
                 checkMaKh = 1;
@@ -430,11 +446,15 @@ public class F_Update_Delete extends javax.swing.JFrame {
 //    }
     //validate
     private boolean validateFields() {
-        
+        Pattern VALID_SDT_ADDRESS_REGEX = Pattern.compile("^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$");
+        Matcher sdt = VALID_SDT_ADDRESS_REGEX.matcher(TF_SDT.getText());
+        //regex mail
+        Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^([\\w-\\.]+){1,64}@([\\w&&[^_]]+){2,255}.[a-z]{2,}$");
+        Matcher email = VALID_EMAIL_ADDRESS_REGEX.matcher(TF_Email.getText());
         if(! ( TF_name.getText().equals("") || 
-               TF_SDT.getText().equals("") || TF_Email.getText().equals("") || TF_AGE.getText().equals(""))){
+               !sdt.find() || !email.find() || TF_AGE.getText().equals(""))){
             return true;
-        }else return false; 
+        }else return false;  
     }
                               
 
@@ -483,6 +503,7 @@ public class F_Update_Delete extends javax.swing.JFrame {
     private javax.swing.JTextField TF_MaKH;
     private javax.swing.JTextField TF_SDT;
     private javax.swing.JTextField TF_name;
+    private javax.swing.JLabel exitlb;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;

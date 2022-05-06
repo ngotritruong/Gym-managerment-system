@@ -12,6 +12,8 @@ import java.util.Random;
 import javax.swing.JOptionPane;
 import java.time.LocalDateTime;  // Import the LocalDateTime class
 import java.time.format.DateTimeFormatter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 /**
  *
  * @author Truong
@@ -36,7 +38,7 @@ public class NewMembers extends javax.swing.JFrame {
             if(rs.next()) {
             Ma = rs.getInt(1);
             Ma += 1; 
-            strID = String.valueOf(Ma+1000); 
+            strID = String.valueOf(Ma); 
             }
             lb_MaKH.setText(strID);
         } catch(SQLException e) {
@@ -334,17 +336,21 @@ public class NewMembers extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        this.setVisible(false);
-        
+        this.setVisible(false);   
     }//GEN-LAST:event_jButton1ActionPerformed
 
     // validate
     private boolean validateFields() {
-        
-        if(! ( TF_name.getText().equals("") || TF_DiaChi.getText().equals("") ||
-               TF_SDT.getText().equals("") || TF_DiaChi.getText().equals("") || TF_AGE.getText().equals(""))){
+        //regex SDT
+        Pattern VALID_SDT_ADDRESS_REGEX = Pattern.compile("^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$");
+        Matcher sdt = VALID_SDT_ADDRESS_REGEX.matcher(TF_SDT.getText());
+        //regex mail
+        Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^([\\w-\\.]+){1,64}@([\\w&&[^_]]+){2,255}.[a-z]{2,}$");
+        Matcher email = VALID_EMAIL_ADDRESS_REGEX.matcher(TF_Email1.getText());
+        if(! ( TF_name.getText().equals("") || 
+               !sdt.find() || !email.find() || TF_AGE.getText().equals(""))){
             return true;
-        }else return false; 
+        }else return false;  
     }
 // reset
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
