@@ -37,7 +37,6 @@ public class F_Home extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
-        jMenu4 = new javax.swing.JMenu();
         jMenu6 = new javax.swing.JMenu();
         jMenu7 = new javax.swing.JMenu();
 
@@ -46,23 +45,21 @@ public class F_Home extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/weightlifting.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Bk.jpg"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(510, 510, 510)
                 .addComponent(jLabel1)
-                .addContainerGap(938, Short.MAX_VALUE))
+                .addGap(0, 716, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(91, 91, 91)
-                .addComponent(jLabel1)
-                .addContainerGap(203, Short.MAX_VALUE))
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 713, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 274, Short.MAX_VALUE))
         );
 
         jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/add-contact.png"))); // NOI18N
@@ -92,13 +89,14 @@ public class F_Home extends javax.swing.JFrame {
         });
         jMenuBar1.add(jMenu3);
 
-        jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/fitness (1).png"))); // NOI18N
-        jMenu5.setText("PT                         .");
+        jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/refresh.png"))); // NOI18N
+        jMenu5.setText("Quản lý gói tập");
+        jMenu5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu5MouseClicked(evt);
+            }
+        });
         jMenuBar1.add(jMenu5);
-
-        jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/webinar.png"))); // NOI18N
-        jMenu4.setText("Class                       .");
-        jMenuBar1.add(jMenu4);
 
         jMenu6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/payment-method (1).png"))); // NOI18N
         jMenu6.setText("Hoa đơn thanh toán");
@@ -165,6 +163,12 @@ public class F_Home extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jMenu6MouseClicked
 
+    private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
+        // TODO add your handling code here:
+        QL_GoiTap GT = new QL_GoiTap();
+        GT.setVisible(true);
+    }//GEN-LAST:event_jMenu5MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -206,7 +210,6 @@ public class F_Home extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;

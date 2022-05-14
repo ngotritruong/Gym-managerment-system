@@ -378,9 +378,8 @@ public class NewMembers extends javax.swing.JFrame {
                 String age= TF_AGE.getText();
                 String TG_Tap= (String) CB_TIME.getSelectedItem();
                 String time = jLabel2.getText();
-//                String goidk= (String) CB_GoiDK.getSelectedItem();
-//                String tongtien = arrInput[0];
                 Connection con = Connect_data.mysql_Connection(); 
+               
                try {
                 PreparedStatement ps = con.prepareStatement("insert into new_member values (?,?,?,?,?,?,?,?,?)");
                 ps.setString(1,Makh);
@@ -391,7 +390,7 @@ public class NewMembers extends javax.swing.JFrame {
                 ps.setString(6,Gioitinh);
                 ps.setString(7,age);
                 ps.setString(8,TG_Tap);
-                ps.setString(9,time);
+                ps.setString(9, time);
 //                ps.setString(8,goidk);
 //                ps.setString(9,tongtien);
 //               
